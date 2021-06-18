@@ -1,0 +1,9 @@
+# An emptydir for the plugins to live in
+apiVersion: apps/v1
+kind: Deployment
+spec:
+  template:
+    spec:
+      volumes:
+      - name: custom-tools
+        emptyDir: {}

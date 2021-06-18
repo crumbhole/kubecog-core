@@ -1,0 +1,34 @@
+# Downloads the plugin and moves it to /custom-tools, which is then mounted on the argocd-repo-server
+apiVersion: apps/v1
+kind: Deployment
+spec:
+  template:
+    spec:
+      containers:
+      - name: argocd-repo-server
+        volumeMounts:
+        - name: custom-tools
+          mountPath: /usr/local/bin/vault-replacer
+          subPath: argocd-vault-replacer
+        - name: custom-tools
+          mountPath: /usr/local/bin/bw
+          subPath: bw
+        envFrom:
+          - secretRef:
+              name: argocd-vault-replacer-secrets
+      volumes:
+      - name: custom-tools
+        emptyDir: {}
+      initContainers:
+      - name: argocd-vault-replacer-install
+        image: ghcr.io/crumbhole/argocd-vault-replacer:stable
+        imagePullPolicy: Always
+        volumeMounts:
+          - mountPath: /custom-tools
+            name: custom-tools
+      - name: bitwarden-cli-install
+        image: alpine:3.13.5
+        cmd: ["/bin/sh", "-c", "apk add --no-cache curl && curl -SL https://github.com/bitwarden/cli/releases/download/v1.16.0/bw-linux-1.16.0.zip > tmp.zip && unzip tmp.zip && rm tmp.zip && chmod +x bw && mv bw /custom-tools"]
+        volumeMounts:
+          - mountPath: /custom-tools
+            name: custom-tools

@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crumblecog-core
+spec:
+  destination:
+    name: in-cluster
+    namespace: argocd
+  project: system
+  source:
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: applications
+    repoURL: https://github.com/crumbhole/crumblecog-core
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  name: argocd-server-http-ingress
+spec:
+  rules:
+  - host: argocd.<crumblecog:domain>
+    http:
+      paths:
+      - backend:
+          serviceName: argocd-server
+          servicePort: http
+  tls:
+  - hosts:
+    - argocd.<crumblecog:domain>
+    secretName: argocd-tls
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: GRPC
+  name: argocd-server-grpc-ingress
+spec:
+  rules:
+  - host: grpc.argocd.<crumblecog:domain>
+    http:
+      paths:
+      - backend:
+          serviceName: argocd-server
+          servicePort: https
+  tls:
+  - hosts:
+    - grpc.argocd.worldprogramming.com
+    secretName: argocd-tls-grpc
