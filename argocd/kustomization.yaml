@@ -9,22 +9,22 @@ resources:
 - crumblecog-core.yaml
 - system-project.yaml
 - vault-k8s-auth.yaml
-- serviceaccount.yml
+- serviceaccount.yaml
 
 patches:
-- path: custom-tools.yml
+- path: custom-tools.yaml
   target:
     kind: Deployment
     name: argocd-repo-server
-- path: argocd-vault-replacer.yml
+- path: argocd-vault-replacer.yaml
   target:
     kind: Deployment
     name: argocd-repo-server
-- path: crumblecog-plugin.yml
+- path: crumblecog-plugin.yaml
   target:
     kind: Deployment
     name: argocd-repo-server
-- path: patch-serviceAccount.yml
+- path: patch-serviceAccount.yaml
   target:
     kind: Deployment
     name: argocd-repo-server
