@@ -10,27 +10,45 @@ spec:
       - name: argocd-repo-server
         volumeMounts:
         - name: custom-tools
-          mountPath: /usr/local/bin/vault-replacer
+          mountPath: /usr/local/bin/argocd-vault-replacer
           subPath: argocd-vault-replacer
         - name: custom-tools
           mountPath: /usr/local/bin/bw
           subPath: bw
+        - mountPath: /home/argocd/.config/Bitwarden CLI
+          name: bwconfig
         envFrom:
           - secretRef:
               name: argocd-vault-replacer-secrets
-      volumes:
-      - name: custom-tools
-        emptyDir: {}
       initContainers:
       - name: argocd-vault-replacer-install
         image: ghcr.io/crumbhole/argocd-vault-replacer:stable
         imagePullPolicy: Always
         volumeMounts:
-          - mountPath: /custom-tools
-            name: custom-tools
+        - mountPath: /custom-tools
+          name: custom-tools
       - name: bitwarden-cli-install
         image: alpine:3.13.5
         command: ["/bin/sh", "-c", "apk add --no-cache curl && curl -SL https://github.com/bitwarden/cli/releases/download/v1.16.0/bw-linux-1.16.0.zip > tmp.zip && unzip tmp.zip && rm tmp.zip && chmod +x bw && mv bw /custom-tools"]
         volumeMounts:
-          - mountPath: /custom-tools
-            name: custom-tools
+        - mountPath: /custom-tools
+          name: custom-tools
+      - name: bwdata-install
+        image: alpine:3.13.5
+        command: ["/bin/sh", "-c", "if [ -f /bwdata/bwdata.json ]; then cp /bwdata/bwdata.json \"/home/argocd/.config/Bitwarden CLI/data.json\" && echo CopiedBWData; cat \"/home/argocd/.config/Bitwarden CLI/data.json\"; fi;"]
+        volumeMounts:
+        - mountPath: /bwdata
+          name: bwdata
+        - mountPath: /home/argocd/.config/Bitwarden CLI
+          name: bwconfig
+      volumes:
+      - name: custom-tools
+        emptyDir: {}
+      - name: bwconfig
+        emptyDir: {}
+      - name: bwdata
+        secret:
+          secretName: argocd-vault-replacer-files
+          items:
+            - key: bwdata.json
+              path: bwdata.json
