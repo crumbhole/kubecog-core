@@ -6,29 +6,16 @@ metadata:
 spec:
   acme:
     server: https://acme-staging-v02.api.letsencrypt.org/directory
-    email: noreply@worldprogramming.com
+    email: noreply@crumblecog.com
     privateKeySecretRef:
       name: letsencrypt-staging
     solvers:
-      # Cloudflare does most things
       - dns01:
           cloudflare:
-            email: noreply@worldprogramming.com
+            email: noreply@crumblecog.com
             apiTokenSecretRef:
               name: cloudflare-api-token
               key: api-key.txt
-      # wpsinternal.co.uk is handled by Athena instead
-      - dns01:
-          rfc2136:
-            nameserver: 192.168.100.2:53
-            tsigKeyName: wpsinternal-key
-            tsigAlgorithm: HMACSHA256
-            tsigSecretSecretRef:
-              name: wpsinternal-tsig-key
-              key: tsig-key
-        selector:
-          dnsZones:
-            - "wpsinternal.co.uk"
 ---
 apiVersion: cert-manager.io/v1alpha2
 kind: ClusterIssuer
@@ -37,26 +24,13 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: noreply@worldprogramming.com
+    email: noreply@crumblecog.com
     privateKeySecretRef:
       name: letsencrypt-production
     solvers:
-      # Cloudflare does most things
       - dns01:
           cloudflare:
-            email: noreply@worldprogramming.com
+            email: noreply@crumblecog.com
             apiTokenSecretRef:
               name: cloudflare-api-token
               key: api-key.txt
-      # wpsinternal.co.uk is handled by Athena instead
-      - dns01:
-          rfc2136:
-            nameserver: 192.168.100.2:53
-            tsigKeyName: wpsinternal-key
-            tsigAlgorithm: HMACSHA256
-            tsigSecretSecretRef:
-              name: wpsinternal-tsig-key
-              key: tsig-key
-        selector:
-          dnsZones:
-            - "wpsinternal.co.uk"

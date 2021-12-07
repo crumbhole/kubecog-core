@@ -62,7 +62,7 @@ spec:
       serviceAccount: external-dns
       containers:
       - name: external-dns
-        image: docker.worldprogramming.com/external-dns/external-dns:v0.8.0
+        image: external-dns/external-dns:v0.10.1
         imagePullPolicy: Always
         args:
         - --source=ingress

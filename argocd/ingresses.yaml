@@ -38,5 +38,5 @@ spec:
           servicePort: https
   tls:
   - hosts:
-    - grpc.argocd.worldprogramming.com
+    - grpc.argocd.<crumblecog:domain>
     secretName: argocd-tls-grpc
