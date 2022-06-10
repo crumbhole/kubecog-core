@@ -1,4 +1,3 @@
-{{- if .ingress-nginx}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -51,4 +50,3 @@ spec:
   - hosts:
     - grpc.argocd.{{ .domain.name }}
     secretName: argocd-tls-grpc
-{{- end}}
