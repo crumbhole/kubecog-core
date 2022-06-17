@@ -33,9 +33,14 @@ patches:
   target:
     kind: Deployment
     name: argocd-repo-server
+- path: argocd-dex-server.yaml
+  target:
+    kind: Deployment
+    name: argocd-dex-server
 
 patchesStrategicMerge:
 - argo-cd-cm.yaml
+- argocd-dex-server.yaml
 
 patchesJson6902:
 - target:
