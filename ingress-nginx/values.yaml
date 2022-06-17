@@ -14,7 +14,11 @@ commonLabels: {}
 # myLabel: aakkmd
 
 controller:
+  {{- if .ingress-nginx.test}}
+  name: test
+  {{- else}}
   name: controller
+  {{- end}}
   image:
     ## Keep false as default for now!
     chroot: false
