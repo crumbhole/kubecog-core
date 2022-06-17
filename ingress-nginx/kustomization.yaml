@@ -4,7 +4,7 @@ kind: Kustomization
 helmChartInflationGenerator:
 - chartName: ingress-nginx
   chartRepoUrl: https://kubernetes.github.io/ingress-nginx
-  chartVersion: 4.1.2
+  chartVersion: 4.1.4
   releaseName: ingress-nginx
   releaseNamespace: ingress-nginx
   values: values.yaml

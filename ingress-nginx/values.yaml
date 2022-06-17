@@ -18,14 +18,14 @@ controller:
   image:
     ## Keep false as default for now!
     chroot: false
-    registry: k8s.gcr.io
+    registry: registry.k8s.io
     image: ingress-nginx/controller
     ## for backwards compatibility consider setting the full image url via the repository value below
     ## use *either* current default registry/image or repository format or installing chart by providing the values.yaml will fail
     ## repository:
-    tag: "v1.2.0"
-    digest: sha256:d8196e3bc1e72547c5dec66d6556c0ff92a23f6d0919b206be170bc90d5f9185
-    digestChroot: sha256:fb17f1700b77d4fcc52ca6f83ffc2821861ae887dbb87149cf5cbc52bea425e5
+    tag: "v1.2.1"
+    digest: sha256:5516d103a9c2ecc4f026efbd4b40662ce22dc1f824fb129ed121460aaa5c47f8
+    digestChroot: sha256:d301551cf62bc3fb75c69fa56f7aa1d9e87b5079333adaf38afe84d9b7439355
     pullPolicy: IfNotPresent
     # www-data -> uid 101
     runAsUser: 101
@@ -43,41 +43,7 @@ controller:
     https: 443
 
   # -- Will add custom configuration options to Nginx https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
-  config:
-    use-gzip: "true"
-    brotli-level: "6"
-    enable-brotli: "true"
-    log-format-upstream: '{
-                          "time_local": "$time_local",
-                          "remote_addr": "$remote_addr",
-                          "request": "$request",
-                          "status": $status,
-                          "request_id": "$req_id",
-                          "request_time": $request_time,
-                          "remote_user": "$remote_user",
-                          "remote_port": "$remote_port",
-                          "body_bytes_sent": "$body_bytes_sent",
-                          "bytes_sent": "$bytes_sent",
-                          "request_length": $request_length,
-                          "connection_requests": "$connection_requests",
-                          "http_host": "$http_host",
-                          "http_referrer":"$http_referer",
-                          "upstream": "$upstream_addr",
-                          "upstream_connect_time": "$upstream_connect_time",
-                          "upstream_header_time": "$upstream_header_time",
-                          "upstream_response_time": "$upstream_response_time",
-                          "upstream_response_length": "$upstream_response_length",
-                          "upstream_cache_status": "$upstream_cache_status",
-                          "ssl_protocol": "$ssl_protocol",
-                          "ssl_cipher": "$ssl_cipher",
-                          "scheme": "$scheme",
-                          "http_user_agent":"$http_user_agent",
-                          "x_forward_for": "$proxy_add_x_forwarded_for",
-                          "vhost": "$host",
-                          "request_proto": "$server_protocol",
-                          "path": "$uri",
-                          "request_query": "$args"
-                          }'
+  config: {}
 
   # -- Annotations to be added to the controller config configuration configmap.
   configAnnotations: {}
@@ -144,7 +110,7 @@ controller:
     # -- Is this ingressClass enabled or not
     enabled: true
     # -- Is this the default ingressClass for the cluster
-    default: true
+    default: false
     # -- Controller-value of the controller that is processing this ingressClass
     controllerValue: "k8s.io/ingress-nginx"
 
@@ -443,26 +409,26 @@ controller:
       #  annotations:
       # key: value
     triggers: []
-#     - type: prometheus
-#       metadata:
-#         serverAddress: http://<prometheus-host>:9090
-#         metricName: http_requests_total
-#         threshold: '100'
-#         query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
+ #     - type: prometheus
+ #       metadata:
+ #         serverAddress: http://<prometheus-host>:9090
+ #         metricName: http_requests_total
+ #         threshold: '100'
+ #         query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
 
     behavior: {}
-#     scaleDown:
-#       stabilizationWindowSeconds: 300
-#       policies:
-#       - type: Pods
-#         value: 1
-#         periodSeconds: 180
-#     scaleUp:
-#       stabilizationWindowSeconds: 300
-#       policies:
-#       - type: Pods
-#         value: 2
-#         periodSeconds: 60
+ #     scaleDown:
+ #       stabilizationWindowSeconds: 300
+ #       policies:
+ #       - type: Pods
+ #         value: 1
+ #         periodSeconds: 180
+ #     scaleUp:
+ #       stabilizationWindowSeconds: 300
+ #       policies:
+ #       - type: Pods
+ #         value: 2
+ #         periodSeconds: 60
 
   # -- Enable mimalloc as a drop-in replacement for malloc.
   ## ref: https://github.com/microsoft/mimalloc
@@ -485,18 +451,7 @@ controller:
     ##
     appProtocol: true
 
-    # {{- if .platform.provider == "aws" }}
-    # annotations:
-    #   service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: '60'
-    #   service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: 'true'
-    #   service.beta.kubernetes.io/aws-load-balancer-type: nlb
-    #   service.beta.kubernetes.io/aws-load-balancer-internal: "false"
-    #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
-    #   service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "Name={{ .domain.name }},domain={{ .domain.name }},private=false,public=true"
-    # {{- else }}
     annotations: {}
-    # {{- end }}
-
     labels: {}
     # clusterIP: ""
 
@@ -625,7 +580,7 @@ controller:
   extraModules: []
   ## Modules, which are mounted into the core nginx image
   # - name: opentelemetry
-  #   image: k8s.gcr.io/ingress-nginx/opentelemetry:v20220415-controller-v1.2.0-beta.0-2-g81c2afd97@sha256:ce61e2cf0b347dffebb2dcbf57c33891d2217c1bad9c0959c878e5be671ef941
+  #   image: registry.k8s.io/ingress-nginx/opentelemetry:v20220415-controller-v1.2.0-beta.0-2-g81c2afd97@sha256:ce61e2cf0b347dffebb2dcbf57c33891d2217c1bad9c0959c878e5be671ef941
   #
   # The image must contain a `/usr/local/bin/init_module.sh` executable, which
   # will be executed as initContainers, to move its config files within the
@@ -676,7 +631,7 @@ controller:
     patch:
       enabled: true
       image:
-        registry: k8s.gcr.io
+        registry: registry.k8s.io
         image: ingress-nginx/kube-webhook-certgen
         ## for backwards compatibility consider setting the full image url via the repository value below
         ## use *either* current default registry/image or repository format or installing chart by providing the values.yaml will fail
@@ -803,7 +758,7 @@ defaultBackend:
 
   name: defaultbackend
   image:
-    registry: k8s.gcr.io
+    registry: registry.k8s.io
     image: defaultbackend-amd64
     ## for backwards compatibility consider setting the full image url via the repository value below
     ## use *either* current default registry/image or repository format or installing chart by providing the values.yaml will fail
