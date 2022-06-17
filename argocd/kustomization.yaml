@@ -40,11 +40,12 @@ patches:
 
 patchesStrategicMerge:
 - argo-cd-cm.yaml
-- argocd-dex-server.yaml
+- argocd-dex-server-deploy.yaml
 - argocd-dex-server-role.yaml
 - argocd-dex-server-rolebinding.yaml
 - argocd-dex-server-sa.yaml
 - argocd-dex-server-svc.yaml
+- argocd-dex-server-netpol.yaml
 
 patchesJson6902:
 - target:
