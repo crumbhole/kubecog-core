@@ -14,7 +14,7 @@ commonLabels: {}
 # myLabel: aakkmd
 
 controller:
-  {{- if .ingress-nginx.test}}
+  {{- if .ingressnginx.test}}
   name: test
   {{- else}}
   name: controller
