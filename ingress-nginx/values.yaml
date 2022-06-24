@@ -14,11 +14,7 @@ commonLabels: {}
 # myLabel: aakkmd
 
 controller:
-  {{- if .ingressnginx.test}}
-  name: test
-  {{- else}}
   name: controller
-  {{- end}}
   image:
     ## Keep false as default for now!
     chroot: false
@@ -47,7 +43,41 @@ controller:
     https: 443
 
   # -- Will add custom configuration options to Nginx https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
-  config: {}
+  config:
+    use-gzip: "true"
+    brotli-level: "6"
+    enable-brotli: "true"
+    log-format-upstream: '{
+                          "time_local": "$time_local",
+                          "remote_addr": "$remote_addr",
+                          "request": "$request",
+                          "status": $status,
+                          "request_id": "$req_id",
+                          "request_time": $request_time,
+                          "remote_user": "$remote_user",
+                          "remote_port": "$remote_port",
+                          "body_bytes_sent": "$body_bytes_sent",
+                          "bytes_sent": "$bytes_sent",
+                          "request_length": $request_length,
+                          "connection_requests": "$connection_requests",
+                          "http_host": "$http_host",
+                          "http_referrer":"$http_referer",
+                          "upstream": "$upstream_addr",
+                          "upstream_connect_time": "$upstream_connect_time",
+                          "upstream_header_time": "$upstream_header_time",
+                          "upstream_response_time": "$upstream_response_time",
+                          "upstream_response_length": "$upstream_response_length",
+                          "upstream_cache_status": "$upstream_cache_status",
+                          "ssl_protocol": "$ssl_protocol",
+                          "ssl_cipher": "$ssl_cipher",
+                          "scheme": "$scheme",
+                          "http_user_agent":"$http_user_agent",
+                          "x_forward_for": "$proxy_add_x_forwarded_for",
+                          "vhost": "$host",
+                          "request_proto": "$server_protocol",
+                          "path": "$uri",
+                          "request_query": "$args"
+                          }'
 
   # -- Annotations to be added to the controller config configuration configmap.
   configAnnotations: {}
