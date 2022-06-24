@@ -11,11 +11,13 @@ spec:
       name: letsencrypt-staging
     solvers:
       - dns01:
+{{- if eq .platform.dns "cloudflare"}}
           cloudflare:
             email: noreply@crumblecog.com
             apiTokenSecretRef:
               name: cloudflare-api-token
               key: api-key.txt
+{{- end}}
 ---
 apiVersion: cert-manager.io/v1alpha2
 kind: ClusterIssuer
@@ -29,8 +31,10 @@ spec:
       name: letsencrypt-production
     solvers:
       - dns01:
+{{- if eq .platform.dns "cloudflare"}}
           cloudflare:
             email: noreply@crumblecog.com
             apiTokenSecretRef:
               name: cloudflare-api-token
               key: api-key.txt
+{{- end}}
