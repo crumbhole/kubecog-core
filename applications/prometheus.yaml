@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: prometheus
+spec:
+  destination:
+    name: in-cluster
+    namespace: prometheus
+  project: system
+  source:
+    path: kube-prometheus-stack
+    repoURL: https://github.com/crumbhole/crumblecog-core
+    targetRevision: HEAD
+    plugin:
+      name: kustomize-crumblecog
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
