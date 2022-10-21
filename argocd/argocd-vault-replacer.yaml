@@ -15,8 +15,8 @@ spec:
         - name: custom-tools
           mountPath: /usr/local/bin/bw
           subPath: bw
-        - mountPath: /home/argocd/.config/Bitwarden CLI
-          name: bwconfig
+#        - mountPath: /home/argocd/.config/Bitwarden CLI
+#          name: bwconfig
         envFrom:
           - secretRef:
               name: argocd-vault-replacer-secrets
@@ -37,8 +37,8 @@ spec:
         image: alpine:3.13.5
         command: ["/bin/sh", "-c", "if [ -f /bwdata/bwdata.json ]; then cp /bwdata/bwdata.json \"/home/argocd/.config/Bitwarden CLI/data.json\" && echo CopiedBWData; cat \"/home/argocd/.config/Bitwarden CLI/data.json\"; fi;"]
         volumeMounts:
-        - mountPath: /bwdata
-          name: bwdata
+   #     - mountPath: /bwdata
+   #       name: bwdata
         - mountPath: /home/argocd/.config/Bitwarden CLI
           name: bwconfig
       volumes:
@@ -46,9 +46,9 @@ spec:
         emptyDir: {}
       - name: bwconfig
         emptyDir: {}
-      - name: bwdata
-        secret:
-          secretName: argocd-vault-replacer-files
-          items:
-            - key: bwdata.json
-              path: bwdata.json
+   #   - name: bwdata
+   #     secret:
+   #       secretName: argocd-vault-replacer-files
+   #       items:
+   #         - key: bwdata.json
+   #           path: bwdata.json
