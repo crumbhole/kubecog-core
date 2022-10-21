@@ -10,19 +10,19 @@ metadata:
 spec:
   ingressClassName: nginx-internal
   rules:
-  - host: argocd.{{ .domain.name }}
+  - host: argocd.[[ .base.domain.name ]]
     http:
       paths:
       - path: "/"
         pathType: ImplementationSpecific
         backend:
-          service: 
+          service:
             name: argocd-server
-            port: 
+            port:
               name: https
   tls:
   - hosts:
-    - argocd.{{ .domain.name }}
+    - argocd.[[ .base.domain.name ]]
     secretName: argocd-tls
 ---
 apiVersion: networking.k8s.io/v1
@@ -36,17 +36,17 @@ metadata:
 spec:
   ingressClassName: nginx-internal
   rules:
-  - host: grpc.argocd.{{ .domain.name }}
+  - host: grpc.argocd.[[ .base.domain.name ]]
     http:
       paths:
       - path: "/"
         pathType: ImplementationSpecific
         backend:
-          service: 
+          service:
             name: argocd-server
-            port: 
+            port:
               name: https
   tls:
   - hosts:
-    - grpc.argocd.{{ .domain.name }}
+    - grpc.argocd.[[ .base.domain.name ]]
     secretName: argocd-tls-grpc
