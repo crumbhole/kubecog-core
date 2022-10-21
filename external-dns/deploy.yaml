@@ -70,9 +70,9 @@ spec:
         - --source=crd
         - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
         - --crd-source-kind=DNSEndpoint
-        - --domain-filter=<crumblecog:domain>
+        - --domain-filter=<kubecog:domain>
         - --registry=txt
-        - --txt-owner-id=crumblecog-<crumblecog:domain>
+        - --txt-owner-id=kubecog-<kubecog:domain>
         - --annotation-filter=kubernetes.io/external-dns-class in (nginx)
 {{- if eq .platform.dns "cloudflare"}}
         - --provider=cloudflare

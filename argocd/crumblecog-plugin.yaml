@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: crumblecog-plugin
+  name: kubecog-plugin
 spec:
   template:
     spec:
@@ -10,11 +10,11 @@ spec:
       - name: argocd-repo-server
         volumeMounts:
         - name: custom-tools
-          mountPath: /usr/local/bin/crumblecog-plugin
-          subPath: crumblecog-plugin
+          mountPath: /usr/local/bin/kubecog-plugin
+          subPath: kubecog-plugin
       initContainers:
-      - name: crumblecog-plugin-install
-        image: ghcr.io/crumbhole/crumblecog-plugin:stable
+      - name: kubecog-plugin-install
+        image: ghcr.io/crumbhole/kubecog-plugin:stable
         imagePullPolicy: Always
         volumeMounts:
           - mountPath: /custom-tools

@@ -11,10 +11,10 @@ spec:
   project: system
   source:
     path: external-dns
-    repoURL: https://github.com/crumbhole/crumblecog-core
+    repoURL: https://github.com/crumbhole/kubecog-core
     targetRevision: HEAD
     plugin:
-      name: kustomize-crumblecog
+      name: kustomize-kubecog
   syncPolicy:
     automated:
       prune: true

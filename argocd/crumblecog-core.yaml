@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: crumblecog-core
+  name: kubecog-core
 spec:
   destination:
     name: in-cluster
@@ -12,7 +12,7 @@ spec:
       jsonnet: {}
       recurse: true
     path: applications
-    repoURL: https://github.com/crumbhole/crumblecog-core
+    repoURL: https://github.com/crumbhole/kubecog-core
     targetRevision: HEAD
   syncPolicy:
     automated:

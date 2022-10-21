@@ -7,10 +7,10 @@ data:
   statusbadge.enabled: 'true'
   application.instanceLabelKey: argocd.argoproj.io/instance
   repositories: |
-    - name: Crumblecog-core
+    - name: Kubecog-core
       type: git
-      url: https://github.com/crumbhole/crumblecog-core
-  url: https://argocd.<crumblecog:domain>
+      url: https://github.com/crumbhole/kubecog-core
+  url: https://argocd.<kubecog:domain>
   resource.customizations: |
     admissionregistration.k8s.io/ValidatingWebhookConfiguration:
       ignoreDifferences: |
@@ -31,17 +31,17 @@ data:
     - name: argocd-vault-replacer
       generate:
         command: ["argocd-vault-replacer"]
-    - name: crumblecog
+    - name: kubecog
       generate:
-        command: ["crumblecog-plugin | argocd-vault-replacer"]
+        command: ["kubecog-plugin | argocd-vault-replacer"]
     - name: kustomize-argocd-vault-replacer
       generate:
         command: ["sh", "-c"]
         args: ["kustomize build . | argocd-vault-replacer"]
-    - name: kustomize-crumblecog
+    - name: kustomize-kubecog
       generate:
         command: ["sh", "-c"]
-        args: ["kustomize build . | crumblecog-plugin | argocd-vault-replacer"]
+        args: ["kustomize build . | kubecog-plugin | argocd-vault-replacer"]
     - name: helm-argocd-vault-replacer
       init:
         command: ["/bin/sh", "-c"]
@@ -49,10 +49,10 @@ data:
       generate:
         command: [sh, -c]
         args: ["helm template -n $ARGOCD_APP_NAMESPACE $ARGOCD_APP_NAME . | argocd-vault-replacer"]
-    - name: helm-crumblecog
+    - name: helm-kubecog
       init:
         command: ["/bin/sh", "-c"]
         args: ["helm dependency build"]
       generate:
         command: [sh, -c]
-        args: ["helm template -n $ARGOCD_APP_NAMESPACE $ARGOCD_APP_NAME . | crumblecog-plugin | argocd-vault-replacer"]
+        args: ["helm template -n $ARGOCD_APP_NAMESPACE $ARGOCD_APP_NAME . | kubecog-plugin | argocd-vault-replacer"]

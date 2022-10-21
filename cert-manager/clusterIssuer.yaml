@@ -6,14 +6,14 @@ metadata:
 spec:
   acme:
     server: https://acme-staging-v02.api.letsencrypt.org/directory
-    email: noreply@crumblecog.com
+    email: noreply@kubecog.com
     privateKeySecretRef:
       name: letsencrypt-staging
     solvers:
       - dns01:
 {{- if eq .platform.dns "cloudflare"}}
           cloudflare:
-            email: noreply@crumblecog.com
+            email: noreply@kubecog.com
             apiTokenSecretRef:
               name: cloudflare-api-token
               key: api-key.txt
@@ -26,14 +26,14 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: noreply@crumblecog.com
+    email: noreply@kubecog.com
     privateKeySecretRef:
       name: letsencrypt-production
     solvers:
       - dns01:
 {{- if eq .platform.dns "cloudflare"}}
           cloudflare:
-            email: noreply@crumblecog.com
+            email: noreply@kubecog.com
             apiTokenSecretRef:
               name: cloudflare-api-token
               key: api-key.txt
