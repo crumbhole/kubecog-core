@@ -32,6 +32,7 @@ kube-prometheus-stack:
   ## Create default rules for monitoring the cluster
   ##
   defaultRules:
+    [[- if .base.platform.metrics]]
     create: true
     rules:
       alertmanager: true
@@ -59,6 +60,9 @@ kube-prometheus-stack:
       nodeExporterRecording: true
       prometheus: true
       prometheusOperator: true
+    [[- else]]
+    create: false
+    [[- end]]
 
     ## Reduce app namespace alert scope
     appNamespacesTarget: ".*"
