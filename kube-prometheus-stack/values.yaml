@@ -136,8 +136,11 @@ kube-prometheus-stack:
 
     ## Deploy alertmanager
     ##
+    [[- if .base.platform.metrics]]
+    enabled: false
+    [[- else]]
     enabled: true
-
+    [[- end]]
     ## Annotations for Alertmanager
     ##
     annotations: {}
