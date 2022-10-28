@@ -2190,7 +2190,7 @@ kube-prometheus-stack:
       ##
       image:
         repository: quay.io/prometheus/prometheus
-        tag: v2.38.0
+        tag: v2.39.1
         sha: ""
 
       ## Tolerations for use with node taints
