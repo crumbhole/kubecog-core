@@ -4,6 +4,6 @@ kind: Kustomization
 resources:
 - deploy.yaml
 - crd-manifest.yaml
-{{- if eq .platform.dns "cloudflare"}}
+[[- if eq .base.platform.dns "cloudflare"]]
 - cloudflare-secret.yaml
-{{- end}}
+[[- end]]

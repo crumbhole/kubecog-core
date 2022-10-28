@@ -74,7 +74,7 @@ spec:
         - --registry=txt
         - --txt-owner-id=kubecog-<kubecog:domain>
         - --annotation-filter=kubernetes.io/external-dns-class in (nginx)
-{{- if eq .platform.dns "cloudflare"}}
+[[- if eq .base.platform.dns "cloudflare"]]
         - --provider=cloudflare
         env:
         - name: CF_API_TOKEN
@@ -82,4 +82,4 @@ spec:
             secretKeyRef:
               name: cloudflare-api-token
               key:  api-token.txt
-{{- end}}
+[[- end]]
