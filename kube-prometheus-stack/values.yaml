@@ -1738,7 +1738,7 @@ kube-prometheus-stack:
     ##
     image:
       repository: quay.io/prometheus-operator/prometheus-operator
-      tag: v0.58.0
+      tag: v0.60.1
       sha: ""
       pullPolicy: IfNotPresent
 
