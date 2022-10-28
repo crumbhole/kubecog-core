@@ -3,7 +3,7 @@ kind: Application
 metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  name: ingres-nginx
+  name: ingress-nginx
 spec:
   destination:
     name: in-cluster
