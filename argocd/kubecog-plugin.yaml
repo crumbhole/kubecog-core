@@ -12,6 +12,9 @@ spec:
         - name: custom-tools
           mountPath: /usr/local/bin/kubecog-plugin
           subPath: kubecog-plugin
+        - name: custom-tools
+          mountPath: /usr/local/bin/gomplate
+          subPath: gomplate
       initContainers:
       - name: kubecog-plugin-install
         image: ghcr.io/crumbhole/kubecog-plugin:stable
