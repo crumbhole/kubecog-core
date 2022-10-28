@@ -14,7 +14,7 @@ resources:
 - kubecog-core.yaml
 - system-project.yaml
 - vault-k8s-auth.yaml
-- serviceaccount.yaml
+
 
 patches:
 - path: custom-tools.yaml
