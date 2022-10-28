@@ -1772,7 +1772,7 @@ kube-prometheus-stack:
     ##
     thanosImage:
       repository: quay.io/thanos/thanos
-      tag: v0.25.2
+      tag: v0.28.1
       sha: ""
 
     ## Set a Field Selector to filter watched secrets
@@ -3008,7 +3008,7 @@ kube-prometheus-stack:
       ##
       image:
         repository: quay.io/thanos/thanos
-        tag: v0.24.0
+        tag: v0.28.1
         sha: ""
 
       ## Namespaces to be selected for PrometheusRules discovery.
