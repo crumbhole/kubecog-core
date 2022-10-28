@@ -1462,7 +1462,11 @@ kube-prometheus-stack:
   ## Deploy node exporter as a daemonset to all nodes
   ##
   nodeExporter:
+    [[- if .base.platform.metrics]]
     enabled: true
+    [[- else]]
+    enabled: false
+    [[- end]]
 
   ## Configuration for prometheus-node-exporter subchart
   ##
@@ -1479,11 +1483,7 @@ kube-prometheus-stack:
       portName: http-metrics
     prometheus:
       monitor:
-        [[- if .base.platform.metrics]]
         enabled: true
-        [[- else]]
-        enabled: false
-        [[- end]]
 
         jobLabel: jobLabel
 
