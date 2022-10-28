@@ -1,0 +1,42 @@
+[[ range $name, $appvalue := $.addons.applications -]]
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: [[ $name ]]
+spec:
+  destination:
+    name: in-cluster
+[[- if has $appvalue "namespace" ]]
+    namespace: [[ $appvalue.namespace ]]
+[[- else ]]
+    namespace: [[ $name ]]
+[[- end ]]
+  project: system
+  source:
+[[- if has $appvalue "path" ]]
+    path: [[ $appvalue.path ]]
+[[- else ]]
+    path: ""
+[[- end ]]
+[[- if has $appvalue "url" ]]
+    repoURL: [[ $appvalue.url ]]
+[[- else ]]
+    repoURL: https://github.com/crumbhole/[[ $name ]]
+[[- end ]]
+[[- if has $appvalue "revision" ]]
+    targetRevision: [[ $appvalue.revision ]]
+[[- else ]]
+    targetRevision: HEAD
+[[- end ]]
+    plugin:
+      name: argocd-lovely-plugin
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+[[ end -]]
