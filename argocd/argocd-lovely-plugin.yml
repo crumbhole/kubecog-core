@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-lovely-plugin
+spec:
+  template:
+    spec:
+      containers:
+      - name: argocd-repo-server
+        volumeMounts:
+        - name: custom-tools
+          mountPath: /usr/local/bin/argocd-lovely-plugin
+          subPath: argocd-lovely-plugin
+        env:
+          - name: ARGOCD_ENV_LOVELY_PREPROCESSORS
+            value: kubecog-plugin
+          - name: ARGOCD_ENV_LOVELY_PLUGINS
+            value: argocd-vault-replacer
+      volumes:
+      - name: custom-tools
+        emptyDir: {}
+      initContainers:
+      - name: argocd-lovely-plugin-install
+        image: ghcr.io/crumbhole/argocd-lovely-plugin:stable
+        imagePullPolicy: Always
+        volumeMounts:
+          - mountPath: /custom-tools
+            name: custom-tools

@@ -25,6 +25,10 @@ patches:
   target:
     kind: Deployment
     name: argocd-repo-server
+- path: argocd-lovely-plugin.yaml
+  target:
+    kind: Deployment
+    name: argocd-repo-server
 - path: kubecog-plugin.yaml
   target:
     kind: Deployment
