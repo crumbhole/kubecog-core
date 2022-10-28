@@ -1,16 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kubecog-core
+  name: appofapps-kubecog-core
 spec:
   destination:
     name: in-cluster
     namespace: argocd
   project: system
   source:
-    directory:
-      jsonnet: {}
-      recurse: true
+    plugin:
+      name: argocd-lovely-plugin
     path: applications
     repoURL: https://github.com/crumbhole/kubecog-core
     targetRevision: HEAD
