@@ -133,13 +133,12 @@ kube-prometheus-stack:
   ## ref: https://prometheus.io/docs/alerting/alertmanager/
   ##
   alertmanager:
-
     ## Deploy alertmanager
     ##
     [[- if .base.platform.metrics]]
-    enabled: false
-    [[- else]]
     enabled: true
+    [[- else]]
+    enabled: false
     [[- end]]
     ## Annotations for Alertmanager
     ##
@@ -680,7 +679,11 @@ kube-prometheus-stack:
   ## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
   ##
   grafana:
+    [[- if .base.platform.metrics]]
     enabled: true
+    [[- else]]
+    enabled: false
+    [[- end]]
     namespaceOverride: ""
 
     ## ForceDeployDatasources Create datasource configmap even if grafana deployment has been disabled
@@ -853,7 +856,11 @@ kube-prometheus-stack:
   ## Component scraping the kube api server
   ##
   kubeApiServer:
+    [[- if .base.platform.metrics]]
     enabled: true
+    [[- else]]
+    enabled: false
+    [[- end]]
     tlsConfig:
       serverName: kubernetes
       insecureSkipVerify: false
@@ -895,7 +902,11 @@ kube-prometheus-stack:
   ## Component scraping the kubelet and kubelet-hosted cAdvisor
   ##
   kubelet:
+    [[- if .base.platform.metrics]]
     enabled: true
+    [[- else]]
+    enabled: false
+    [[- end]]
     namespace: kube-system
 
     serviceMonitor:
@@ -1029,7 +1040,11 @@ kube-prometheus-stack:
   ## Component scraping the kube controller manager
   ##
   kubeControllerManager:
+    [[- if .base.platform.metrics]]
     enabled: true
+    [[- else]]
+    enabled: false
+    [[- end]]
 
     ## If your kube controller manager is not deployed as a pod, specify IPs it can be found on
     ##
@@ -1094,7 +1109,11 @@ kube-prometheus-stack:
   ## Component scraping coreDns. Use either this or kubeDns
   ##
   coreDns:
+    [[- if .base.platform.metrics]]
     enabled: true
+    [[- else]]
+    enabled: false
+    [[- end]]
     service:
       port: 9153
       targetPort: 9153
@@ -1191,7 +1210,11 @@ kube-prometheus-stack:
   ## Component scraping etcd
   ##
   kubeEtcd:
+    [[- if .base.platform.metrics]]
     enabled: true
+    [[- else]]
+    enabled: false
+    [[- end]]
 
     ## If your etcd is not deployed as a pod, specify IPs it can be found on
     ##
@@ -1258,7 +1281,11 @@ kube-prometheus-stack:
   ## Component scraping kube scheduler
   ##
   kubeScheduler:
+    [[- if .base.platform.metrics]]
     enabled: true
+    [[- else]]
+    enabled: false
+    [[- end]]
 
     ## If your kube scheduler is not deployed as a pod, specify IPs it can be found on
     ##
@@ -1322,7 +1349,11 @@ kube-prometheus-stack:
   ## Component scraping kube proxy
   ##
   kubeProxy:
+    [[- if .base.platform.metrics]]
     enabled: true
+    [[- else]]
+    enabled: false
+    [[- end]]
 
     ## If your kube proxy is not deployed as a pod, specify IPs it can be found on
     ##
@@ -1373,7 +1404,11 @@ kube-prometheus-stack:
   ## Component scraping kube state metrics
   ##
   kubeStateMetrics:
+    [[- if .base.platform.metrics]]
     enabled: true
+    [[- else]]
+    enabled: false
+    [[- end]]
 
   ## Configuration for kube-state-metrics subchart
   ##
@@ -1444,7 +1479,11 @@ kube-prometheus-stack:
       portName: http-metrics
     prometheus:
       monitor:
+        [[- if .base.platform.metrics]]
         enabled: true
+        [[- else]]
+        enabled: false
+        [[- end]]
 
         jobLabel: jobLabel
 
@@ -1488,7 +1527,11 @@ kube-prometheus-stack:
   ## Manages Prometheus and Alertmanager components
   ##
   prometheusOperator:
+    [[- if .base.platform.metrics]]
     enabled: true
+    [[- else]]
+    enabled: false
+    [[- end]]
 
     ## Prometheus-Operator v0.39.0 and later support TLS natively.
     ##
@@ -1786,7 +1829,11 @@ kube-prometheus-stack:
   ##
   prometheus:
 
+    [[- if .base.platform.metrics]]
     enabled: true
+    [[- else]]
+    enabled: false
+    [[- end]]
 
     ## Annotations for Prometheus
     ##
