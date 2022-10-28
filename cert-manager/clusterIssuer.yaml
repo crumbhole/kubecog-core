@@ -8,9 +8,9 @@ spec:
     email: noreply@kubecog.com
     privateKeySecretRef:
       name: letsencrypt-staging
+[[- if eq .base.platform.dns "cloudflare"]]
     solvers:
       - dns01:
-[[- if eq .base.platform.dns "cloudflare"]]
           cloudflare:
             email: noreply@kubecog.com
             apiTokenSecretRef:
@@ -28,9 +28,9 @@ spec:
     email: noreply@kubecog.com
     privateKeySecretRef:
       name: letsencrypt-production
+[[- if eq .base.platform.dns "cloudflare"]]
     solvers:
       - dns01:
-[[- if eq .base.platform.dns "cloudflare"]]
           cloudflare:
             email: noreply@kubecog.com
             apiTokenSecretRef:
