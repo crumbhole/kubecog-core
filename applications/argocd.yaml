@@ -14,7 +14,7 @@ spec:
     repoURL: https://github.com/crumbhole/kubecog-core
     targetRevision: HEAD
     plugin:
-      name: kustomize-kubecog
+      name: argocd-lovely-plugin
   syncPolicy:
     automated:
       prune: true
