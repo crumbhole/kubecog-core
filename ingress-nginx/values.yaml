@@ -684,11 +684,11 @@ controller:
       labels: {}
       runAsUser: 2000
       fsGroup: 2000
-
+[[- if .base.platform.metrics]]
   metrics:
     port: 10254
     # if this port is changed, change healthz-port: in extraArgs: accordingly
-    enabled: false
+    enabled: true
 
     service:
       annotations: {}
@@ -710,7 +710,7 @@ controller:
       # nodePort: ""
 
     serviceMonitor:
-      enabled: false
+      enabled: true
       additionalLabels: {}
       ## The label to use to retrieve the job name from.
       ## jobLabel: "app.kubernetes.io/name"
@@ -764,7 +764,7 @@ controller:
         #   annotations:
         #     description: Too many 4XXs
         #     summary: More than 5% of all requests returned 4XX, this requires your attention
-
+[[- end]]
   # -- Improve connection draining when ingress controller pod is deleted using a lifecycle hook:
   # With this new hook, we increased the default terminationGracePeriodSeconds from 30 seconds
   # to 300, allowing the draining of connections up to five minutes.
